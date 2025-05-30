@@ -1,18 +1,19 @@
 @echo off
-echo Script started at %date% %time% >> %USERPROFILE%\Desktop\timeout_log.txt
-echo Script started at %date% %time% 
-Echo ----------------------------------
-set /p ip=" Press Enter for google.com "
+echo Script started at %date% %time%
+echo ----------------------------------
+echo Script started at %date% %time% >> "%USERPROFILE%\Desktop\timeout_monitor_log.txt"
+set /p ip="Press Enter for Monitring Domain "
 if "%ip%"=="" set ip=google.com
-Echo ..................................
-echo Monitoring %ip%... 
-Echo ..................................
-Echo Press Ctrl+C to stop.
+echo ..................................
+echo Monitoring %ip%...
+echo ..................................
+echo Press Ctrl+C to stop.
+echo .................................. 
+
 :start
-ping %ip% -n 1 > nul
+ping -n 1 -w 2000 %ip% > nul
 if errorlevel 1 (
-    echo %date% %time% - Timeout for %ip%
-    echo %date% %time% - Timeout for %ip% >> %USERPROFILE%\Desktop\timeout_log.txt
+    echo %date% %time% - IP %ip% is unreachable
+    echo %date% %time% - IP %ip% is unreachable >> "%USERPROFILE%\Desktop\timeout_monitor_log.txt"
 )
-timeout /t 1 > nul
 goto start
